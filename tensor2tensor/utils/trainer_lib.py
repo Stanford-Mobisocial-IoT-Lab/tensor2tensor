@@ -489,9 +489,14 @@ def create_experiment(
   # Export
   exporter = None
   if export:
-    def compare_fn(best_eval_result, current_eval_result):
-      metric = eval_early_stopping_metric or "loss"
-      return current_eval_result[metric] < best_eval_result[metric]
+    if eval_early_stopping_metric_minimize:
+      def compare_fn(best_eval_result, current_eval_result):
+        metric = eval_early_stopping_metric or "loss"
+        return current_eval_result[metric] < best_eval_result[metric]
+    else:
+      def compare_fn(best_eval_result, current_eval_result):
+        metric = eval_early_stopping_metric or "loss"
+        return current_eval_result[metric] > best_eval_result[metric]
 
     exporter = tf.estimator.BestExporter(
         name="best",
