@@ -37,6 +37,8 @@ flags = tf.flags
 FLAGS = flags.FLAGS
 
 # See flags.py for additional command-line flags.
+flags.DEFINE_string("checkpoint_path", None,
+                    "Path to the model checkpoint (to be used with --schedule evaluate).")
 flags.DEFINE_string("t2t_usr_dir", None,
                     "Path to a Python module that will be imported. The "
                     "__init__.py file should include the necessary imports. "

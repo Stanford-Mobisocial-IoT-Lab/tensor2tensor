@@ -34,6 +34,7 @@ import tensorflow as tf
 from tensorflow.core.protobuf import rewriter_config_pb2
 from tensorflow.python import debug
 
+FLAGS = tf.flags.FLAGS
 
 def next_checkpoint(model_dir, timeout_mins=120):
   """Yields successive checkpoints from model_dir."""
@@ -347,12 +348,14 @@ class T2TExperiment(object):
   def evaluate(self):
     return self._estimator.evaluate(
         self._eval_spec.input_fn,
+        checkpoint_path=FLAGS.checkpoint_path or None,
         steps=self._eval_spec.steps,
         hooks=self._eval_spec.hooks)
 
   def evaluate_on_train_data(self):
     self._estimator.evaluate(
         self._train_spec.input_fn,
+        checkpoint_path=FLAGS.checkpoint_path or None,
         steps=self._eval_spec.steps,
         hooks=self._eval_spec.hooks,
         name="eval_train")

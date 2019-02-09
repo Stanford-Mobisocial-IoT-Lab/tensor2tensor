@@ -30,7 +30,7 @@ from tensor2tensor.utils import metrics
 import tensorflow as tf
 from tensorflow.contrib.tpu.python.tpu import tpu_config
 
-
+FLAGS = tf.flags.FLAGS
 
 class DatasetSplit(object):
   TRAIN = tf.estimator.ModeKeys.TRAIN
@@ -437,7 +437,10 @@ class Problem(object):
     if mode == DatasetSplit.TRAIN:
       suffix = "train"
     elif mode in [DatasetSplit.EVAL, tf.estimator.ModeKeys.PREDICT]:
-      suffix = "dev"
+      if FLAGS.eval_use_test_set:
+          suffix = "test"
+      else:
+          suffix = "dev"
     else:
       assert mode == DatasetSplit.TEST
       suffix = "test"
