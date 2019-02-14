@@ -46,8 +46,6 @@ flags = tf.flags
 FLAGS = flags.FLAGS
 
 # Additional flags in bin/t2t_trainer.py and utils/flags.py
-flags.DEFINE_string("checkpoint_path", None,
-                    "Path to the model checkpoint. Overrides output_dir.")
 flags.DEFINE_bool("keep_timestamp", False,
                   "Set the mtime of the decoded file to the "
                   "checkpoint_path+'.index' mtime.")
